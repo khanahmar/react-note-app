@@ -5,7 +5,13 @@ import Notes from "./Notes.js"
 function App() {
   const [textValue, setTextValue] = React.useState("")
   const [isActive, setIsActive] = React.useState(false)
-  const [noteArray, setNoteArray] = React.useState([])
+  const [noteArray, setNoteArray] = React.useState(
+    JSON.parse(localStorage.getItem("notes"))
+  )
+
+  React.useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(noteArray))
+  }, [noteArray])
 
   function takeText(event) {
     setTextValue(event.target.value)
@@ -25,16 +31,19 @@ function App() {
   }
 
   function saveNote() {
-    // if (isActive) {
-      // make isActive flase and rerender the array but with updatd item
-    // } else {
+    if (isActive) {
+      setTextValue("")
+      setNoteArray((prevArray) => {
+        return [...prevArray.textValue]
+      })
+    } else {
       if (textValue !== "") {
         setTextValue("")
         setNoteArray((prevArray) => {
           return [...prevArray, textValue]
         })
       }
-    // }
+    }
   }
   console.log(noteArray)
   console.log(textValue)
@@ -44,7 +53,7 @@ function App() {
     <div className="App">
       <h1>Take Notes</h1>
       <div className="row-1">
-        <textarea value={textValue} name="textarea" onChange={takeText} />
+        <textarea placeholder="Enter Note" value={textValue} name="textarea" onChange={takeText} />
         <button onClick={saveNote} className="save">
           {isActive ? "Update" : "Save"}
         </button>
