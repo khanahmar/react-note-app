@@ -29,12 +29,16 @@ function App() {
       }
     })
   }
-
+  // have to correct this function
   function saveNote() {
     if (isActive) {
       setTextValue("")
       setNoteArray((prevArray) => {
-        return [...prevArray.textValue]
+        return prevArray.map((item) => {
+          if (item === textValue) {
+            return [...prevArray, item]
+          }
+        })
       })
     } else {
       if (textValue !== "") {
@@ -53,7 +57,12 @@ function App() {
     <div className="App">
       <h1>Take Notes</h1>
       <div className="row-1">
-        <textarea placeholder="Enter Note" value={textValue} name="textarea" onChange={takeText} />
+        <textarea
+          placeholder="Enter Note"
+          value={textValue}
+          name="textarea"
+          onChange={takeText}
+        />
         <button onClick={saveNote} className="save">
           {isActive ? "Update" : "Save"}
         </button>
