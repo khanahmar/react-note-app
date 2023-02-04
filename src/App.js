@@ -31,23 +31,23 @@ function App() {
   }
   // have to correct this function
   function saveNote() {
-    if (isActive) {
+    // if (isActive) {
+    //   setTextValue("")
+    //   setNoteArray((prevArray) => {
+    //     return prevArray.map((item) => {
+    //       if (item === textValue) {
+    //         return [...prevArray, item]
+    //       }
+    //     })
+    //   })
+    // } else {
+    if (textValue !== "") {
       setTextValue("")
       setNoteArray((prevArray) => {
-        return prevArray.map((item) => {
-          if (item === textValue) {
-            return [...prevArray, item]
-          }
-        })
+        return [...prevArray, textValue]
       })
-    } else {
-      if (textValue !== "") {
-        setTextValue("")
-        setNoteArray((prevArray) => {
-          return [...prevArray, textValue]
-        })
-      }
     }
+    // }
   }
   console.log(noteArray)
   console.log(textValue)
